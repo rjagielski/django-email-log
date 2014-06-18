@@ -18,7 +18,7 @@ class EmailAdmin(admin.ModelAdmin):
         return False
 
     def _html_body(self, obj):
-        return "<iframe width='800' height='600'></iframe><script>$('iframe').get()[0].contentWindow.document.write('" + obj.html_body + "');</script>"
+        return "<iframe width='800' height='600'></iframe><script>if(!$){$ = django.jQuery;}$('iframe').get()[0].contentWindow.document.write('" + obj.html_body + "');</script>"
     _html_body.short_description = 'HTML body'
     _html_body.allow_tags = True
 
