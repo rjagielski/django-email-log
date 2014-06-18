@@ -9,6 +9,7 @@ class EmailAdmin(admin.ModelAdmin):
     readonly_fields = ['from_email', 'recipients', 'subject', 'body',
                        '_html_body', 'date_sent', 'ok']
     search_fields = ['subject', 'body', 'recipients']
+    exclude = ['html_body']
 
     def has_delete_permission(self, *args, **kwargs):
         return False
