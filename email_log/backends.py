@@ -1,4 +1,4 @@
-from django.core.mail import get_connection
+from django.core.mail import get_connection, EmailMultiAlternatives
 from django.core.mail.backends.base import BaseEmailBackend
 
 from .conf import settings
@@ -17,11 +17,22 @@ class EmailBackend(BaseEmailBackend):
         num_sent = 0
         for message in email_messages:
             recipients = '; '.join(message.to)
+            if isinstance(message, EmailMultiAlternatives):
+                try:
+                    html_body = filter(
+                        lambda item: item[1] == 'text/html',
+                        message.alternatives,
+                    )[0][0]
+                except IndexError:
+                    html_body = ''
+            else:
+                html_body = ''
             email = Email.objects.create(
                 from_email=message.from_email,
                 recipients=recipients,
                 subject=message.subject,
                 body=message.body,
+                html_body=html_body,
             )
             message.connection = self.connection
             num_sent += message.send()

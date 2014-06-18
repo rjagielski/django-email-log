@@ -14,6 +14,7 @@ class Email(models.Model):
     recipients = models.TextField(_("recipients"))
     subject = models.TextField(_("subject"))
     body = models.TextField(_("body"))
+    html_body = models.TextField(_("html_body"), blank=True)
     ok = models.BooleanField(_("ok"), default=False, db_index=True)
     date_sent = models.DateTimeField(_("date sent"), auto_now_add=True,
                                      db_index=True)
