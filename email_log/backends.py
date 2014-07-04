@@ -16,7 +16,8 @@ class EmailBackend(BaseEmailBackend):
     def send_messages(self, email_messages):
         num_sent = 0
         for message in email_messages:
-            recipients = '; '.join(message.to)
+            recipients = set(message.to)
+            recipients.update(message.bcc)
             if isinstance(message, EmailMultiAlternatives):
                 try:
                     html_body = filter(
@@ -29,7 +30,7 @@ class EmailBackend(BaseEmailBackend):
                 html_body = message.body
             email = Email.objects.create(
                 from_email=message.from_email,
-                recipients=recipients,
+                recipients=';'.join(recipients),
                 subject=message.subject,
                 body=message.body,
                 html_body=html_body,
