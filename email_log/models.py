@@ -18,6 +18,7 @@ class Email(models.Model):
     ok = models.BooleanField(_("ok"), default=False, db_index=True)
     date_sent = models.DateTimeField(_("date sent"), auto_now_add=True,
                                      db_index=True)
+    attachments = models.TextField(_("attachments"))
 
     def __str__(self):
         return "{s.recipients}: {s.subject}".format(s=self)

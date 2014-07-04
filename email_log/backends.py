@@ -28,12 +28,14 @@ class EmailBackend(BaseEmailBackend):
                     html_body = ''
             else:
                 html_body = message.body
+            attachments_names = [a[0] for a in email.attachments]
             email = Email.objects.create(
                 from_email=message.from_email,
                 recipients=';'.join(recipients),
                 subject=message.subject,
                 body=message.body,
                 html_body=html_body,
+                attachments='\n'.join(attachments_names)
             )
             message.connection = self.connection
             num_sent += message.send()
