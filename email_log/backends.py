@@ -28,7 +28,7 @@ class EmailBackend(BaseEmailBackend):
                     html_body = ''
             else:
                 html_body = message.body
-            attachments_names = [a[0] for a in email.attachments]
+            attachments_names = [a[0] for a in message.attachments]
             email = Email.objects.create(
                 from_email=message.from_email,
                 recipients=';'.join(recipients),
