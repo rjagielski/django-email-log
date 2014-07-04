@@ -26,7 +26,7 @@ class EmailBackend(BaseEmailBackend):
                 except IndexError:
                     html_body = ''
             else:
-                html_body = ''
+                html_body = message.body
             email = Email.objects.create(
                 from_email=message.from_email,
                 recipients=recipients,
